@@ -1,0 +1,9 @@
+<div class="jumbotron" ng-controller="worksCtrl">
+
+    <flash-notification></flash-notification>
+    <h2>All Works <a ui-sref=".add-work-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a></h2>
+    <div ui-view ng-hide="hide"></div>
+
+    <div ng-include="'partials/work/work-panel.html'"></div>
+
+</div>

@@ -1,0 +1,23 @@
+<div>
+
+    <div class="col-md-6" ng-controller="workDetailsCtrl">
+        <flash-notification></flash-notification>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>{{ work.work_title }}
+                    <a ui-sref=".edit-work-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Edit</a>
+                    <a class="btn btn-default btn-danger" role="button" ng-click="delete()">Delete</a>
+                </h2>
+                <h4 ng-repeat="composer in work.composers">by <a ui-sref="composer-details({ composerID: composer.id })">{{concatName(composer)}}</a></h4>
+            </div>
+            <div class="panel-body">
+                <div ui-view ng-hide="hide"></div>
+                <ul class="nav nav-tabs" role="tablist" ng-if="work.workversions.length > 1">
+                    <li ng-repeat="workversion in work.workversions">{{workversion.version_name}}</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>

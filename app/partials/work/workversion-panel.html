@@ -1,0 +1,5 @@
+<div ng-repeat="workversion in workversions">
+    <a ui-sref="work-details({workID: work.id})">{{workversion.version_name}}</a>
+
+    <div ng-include="'partials/work/work-panel.html'"></div>
+</div>

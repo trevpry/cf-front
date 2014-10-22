@@ -1,0 +1,9 @@
+<div class="jumbotron" ng-controller="albumsCtrl">
+
+    <flash-notification></flash-notification>
+    <h2>All Albums <a ui-sref=".add-album-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a></h2>
+    <div ui-view ng-hide="hide"></div>
+
+    <div ng-include="'partials/album/album-panel.html'"></div>
+
+</div>

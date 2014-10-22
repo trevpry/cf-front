@@ -1,0 +1,27 @@
+<div ng-controller="composerDetailsCtrl">
+    <div class="col-md-6" >
+        <flash-notification></flash-notification>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>{{ concatName(composer) }}
+                    <a ui-sref=".edit-composer-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Edit</a>
+                    <a class="btn btn-default btn-danger" role="button" ng-click="delete()">Delete</a>
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div ui-view ng-hide="hide"></div>
+                <img src="http://10.0.10.10/{{composer.composer_image}}" class="img-responsive" alt="Composer image" ng-show="composer.composer_image !== null">
+                Wiki Link: <a href="{{composer.wiki_link}}">{{composer.wiki_link}}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" ng-controller="worksCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2> Works </h2>
+            </div>
+            <div ng-include="'partials/work/work-panel.html'" class="panel-body"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<form role="form" class="create-form form-horizontal" ng-submit="addNew()">
+    <div class="form-group">
+        <label for="workTitle" class="col-sm-2 control-label">Work Title:</label>
+        <div class="col-sm-10">
+            <input type="text" name="workTitle" id="workTitle" class="form-control" placeholder="Enter work title" ng-model="form.workTitle" ng-required><br/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="composerFirstName" class="col-sm-2 control-label">Composer First Name:</label>
+        <div class="col-sm-10">
+            <input type="text" name="composerFirstName" id="composerFirstName" class="form-control" placeholder="Enter composer first name" ng-model="form.composerFirstName" ng-required><br/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="composerLastName" class="col-sm-2 control-label">Composer Last Name:</label>
+        <div class="col-sm-10">
+            <input type="text" name="composerLastName" id="composerLastName" class="form-control" placeholder="Enter composer last name" ng-model="form.composerLastName" ng-required><br/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Save Work</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,21 @@
+<div class="jumbotron" ng-controller="artistsCtrl">
+
+    <flash-notification></flash-notification>
+    <h2>All Artists <a ui-sref=".add-artist-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a></h2>
+    <div ui-view ng-hide="hide"></div>
+
+    <!--<div ng-include="'partials/composer/composer-panel.html'"></div>-->
+    <div ng-repeat="artist in artists">
+        <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(artist, 'add')">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+
+        <button type="button" class="btn btn-default btn-lg add" ng-click="fetchAndAddTracks(artist, 'play')">
+            <span class="glyphicon glyphicon-play"></span>
+        </button>
+
+        <a ui-sref="artist-details({artistID: artist.id})">{{concatName(artist)}}</a>
+
+    </div>
+    
+</div>

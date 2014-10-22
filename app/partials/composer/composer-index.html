@@ -1,0 +1,9 @@
+<div class="jumbotron" ng-controller="composersCtrl">
+
+    <flash-notification></flash-notification>
+    <h2>All Composers <a ui-sref=".add-composer-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a></h2>
+    <div ui-view ng-hide="hide"></div>
+
+    <div ng-include="'partials/composer/composer-panel.html'"></div>
+
+</div>

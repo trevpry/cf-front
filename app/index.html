@@ -1,0 +1,164 @@
+<!doctype html>
+<html class="no-js" ng-app="cfFront">
+  <head>
+    <meta charset="utf-8">
+    <title>ClassicalForce</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css({.tmp,app}) styles/vendor.css -->
+    <link rel="stylesheet" href="styles/vendor.css">
+
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/modernizr.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body ng-controller="playerCtrl">
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container">
+
+      <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="home" ui-sref-active="active">ClassicalForce</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li ui-sref-active="active"><a ui-sref="composer-index">Composers</a></li>
+              <li ui-sref-active="active"><a ui-sref="work-index">Works</a></li>
+              <li ui-sref-active="active"><a ui-sref="album-index">Albums</a></li>
+              <li ui-sref-active="active"><a ui-sref="artist-index">Artists</a></li>
+              <li ui-sref-active="active"><a ui-sref="track-index">Tracks</a></li>
+              <li ui-sref-active="active"><a ui-sref="temp-track-index">Temp Tracks</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div ui-view></div>
+    
+    </div>
+
+    <div class='panel panel-default audio-player'>
+      <div class="player-control">
+      <audio media-player="audio1" data-playlist="audioPlaylist">
+        <!--<source src="http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3" type="audio/mp3">-->
+          
+      </audio>
+        <button ng-click="audio1.playPause()" ng-show="!audio1.playing">Play</button>
+        <button ng-click="audio1.playPause()" ng-show="audio1.playing">Pause</button>
+        <button ng-click="audio1.next()">Next</button>
+        <div class="btn btn-noclick">
+          <span>currentTrack: <span class="badge">{{ audio1.currentTrack }}</span></span>
+        </div>
+        <div class="btn btn-noclick">
+          <span><i class="fa fa-clock-o"></i>: <span class="badge ng-binding">{{ audio1.formatTime }}</span></span>
+        </div>
+        <div class="progress" ng-click="audio1.seek(audio1.duration * seekPercentage($event))">
+          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{ width: audio1.currentTime*100/audio1.duration + '%' }"></div>
+          <div class="time" ng-show="audio1.formatTime">
+            <span class="ng-binding">{{ audio1.formatTime }}</span><b>/</b><span class="ng-binding">{{ audio1.formatDuration }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="track-details panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <li class="details-label">Track Number: {{ audio1.currentTrack }}</li>
+            <li class="details-label">Track Title: {{ nowPlaying.track_title }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!--<div class='panel panel-default audio-player'>-->
+      <!--<jplayer class='speaker' data-audio="audio2" data-autoplay="false" data-pauseothers="false"></jplayer>-->
+    <!--</div>-->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-media-player/dist/angular-media-player.min.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/cfFront.js"></script>
+    <script src="scripts/flashNotification.js"></script>
+    <script src="scripts/main/main-ctrl.js"></script>
+    <!--<script src="scripts/mocks/mocks.js"></script>-->
+    <script src="scripts/audio-player/playlistService.js"></script>
+    <script src="scripts/nameService.js"></script>
+    <script src="scripts/apiService.js"></script>
+    <script src="scripts/composers/composerService.js"></script>
+    <script src="scripts/works/workService.js"></script>
+    <script src="scripts/audio-player/playerCtrl.js"></script>
+    <script src="scripts/tracks/tracks-ctrl.js"></script>
+    <script src="scripts/composers/composers-ctrl.js"></script>
+    <script src="scripts/works/works-ctrl.js"></script>
+    <script src="scripts/albums/albums-ctrl.js"></script>
+    <script src="scripts/artists/artists-ctrl.js"></script>
+    <script src="scripts/composers/composerDetails-ctrl.js"></script>
+    <script src="scripts/works/workDetails-ctrl.js"></script>
+    <script src="scripts/artists/artistDetails-ctrl.js"></script>
+    <script src="scripts/albums/albumDetails-ctrl.js"></script>
+    <script src="scripts/albums/album-tracksAccordion.js"></script>
+
+    <!-- inject:partials -->
+    <!-- angular templates will be automaticaly converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </body>
+</html>

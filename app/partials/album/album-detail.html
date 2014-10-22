@@ -1,0 +1,50 @@
+<div ng-controller="albumDetailsCtrl">
+    <div class="col-md-6" >
+        <flash-notification></flash-notification>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <h2>{{ album.album_title }}
+                    <a ui-sref=".edit-album-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Edit</a>
+                    <a class="btn btn-default btn-danger" role="button" ng-click="delete()">Delete</a>
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div ui-view ng-hide="hide"></div>
+                <div class="album-details">
+                    <div class="cover-art">
+                        <img src="http://10.0.10.10/{{album.cover_thumb_path}}" class="img-responsive" alt="Album image" ng-show="album.cover_thumb_path !== null">
+                    </div>
+
+                    <div class="details-right">
+                        <div>Label: {{album.label}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" ng-controller="worksCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2> Tracks </h2>
+            </div>
+            <div ng-repeat="work in works">
+                <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(work, 'add')">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+
+                <button type="button" class="btn btn-default btn-lg add" ng-click="fetchAndAddTracks(work, 'play')">
+                    <span class="glyphicon glyphicon-play"></span>
+                </button>
+
+                <a ui-sref="work-details({workID: work.id})">{{work.work_title}}</a> -
+                <a ui-sref="composer-details({composerID: composer.id})" ng-repeat="composer in work.composers">{{concatName(composer)}}</a>
+
+                <div ng-controller="worksCtrl">
+                    Test
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
