@@ -8,6 +8,7 @@ angular.module('cfFront')
         $scope.addTracks = playlistService.addTracks;
 
         $scope.play = function(track){
+            console.log(track);
             var path = track.audiofiles[0].file_path;
 
             $scope.audioPlaylist = [];

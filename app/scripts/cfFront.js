@@ -93,7 +93,20 @@ angular.module('cfFront').config(function($stateProvider, $urlRouterProvider) {
 
         .state('track-index', {
             url: '/tracks',
-            templateUrl: 'partials/partial-track-index.html'
+            templateUrl: 'partials/track/track-index.html'
+        })
+
+        .state('track-index.add-track-form', {
+            templateUrl: 'partials/track/add-track-form.html'
+        })
+
+        .state('track-details', {
+            url: '/track/{trackID}',
+            templateUrl: 'partials/track/track-detail.html'
+        })
+
+        .state('track-details.edit-track-form', {
+            templateUrl: 'partials/track/edit-track-form.html'
         })
 
         .state('temp-track-index', {
