@@ -4,7 +4,7 @@ angular.module('cfFront')
     .controller('worksCtrl', function($scope, $http, apiService, nameService){
         $scope.concatName = nameService.concatName;
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/work/';
+        setRoot();
 
         this.initialize = function( works ){
             console.log(works);
@@ -21,12 +21,13 @@ angular.module('cfFront')
 
 
         $scope.fetchAndAddTracks = function(work, action){
+            setRoot();
             apiService.getTracks(work.id)
                 .success(function(data, status) {
                     if(action === 'add'){
-                        $scope.addTracks(data.data);
+                        $scope.addTracks(data.playlist);
                     } else {
-                        $scope.playMany(data.data);
+                        $scope.playMany(data.playlist);
                     }
 
                     $scope.$broadcast('flashNotification::message','Tracks added from:' + work.work_title);
@@ -35,7 +36,7 @@ angular.module('cfFront')
         };
 
         $scope.addNew = function(){
-
+            setRoot();
             var work = {
                 work_title: $scope.form.workTitle,
                 composer_first_name: $scope.form.composerFirstName,
@@ -51,4 +52,7 @@ angular.module('cfFront')
                 });
         };
 
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/work/';
+        };
     });

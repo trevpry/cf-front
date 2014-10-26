@@ -9,7 +9,8 @@
     "angular-media-player": "~0.5.8",
     "angular-mocks": "~1.2.26",
     "angular-animate": "~1.2.26",
-    "angular-bootstrap": "~0.11.2"
+    "angular-bootstrap": "~0.11.2",
+    "jquery-easyui-bower": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.2.x"

@@ -4,7 +4,8 @@ angular.module('cfFront')
     .controller('artistsCtrl', function($scope, $http, $rootScope, apiService, nameService){
         $scope.concatName = nameService.concatName;
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/artist/';
+        $scope.artists = {};
+        setRoot();
 
         apiService.getAll()
             .success(function(data, status) {
@@ -12,35 +13,39 @@ angular.module('cfFront')
                 console.log(data);
         });
 
-        //$scope.fetchAndAddTracks = function(composer, action){
-        //    apiService.getTracks(composer.id)
-        //        .success(function(data, status) {
-        //            $scope.added = composer;
-        //            console.log(data.data);
-        //
-        //            if(action === 'add'){
-        //                $scope.addTracks(data.data);
-        //            } else {
-        //                $scope.playMany(data.data);
-        //            }
-        //
-        //            $scope.$broadcast('flashNotification::message','Tracks added from:' + composer.last_name);
-        //        });
-        //};
-        //
-        //$scope.addNew = function(){
-        //
-        //    var composer = {
-        //        first_name: $scope.form.firstName,
-        //        middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
-        //        last_name: $scope.form.lastName
-        //    };
-        //
-        //    apiService.addNew(composer)
-        //        .success(function(data, status) {
-        //            $scope.composers.push(data.composer);
-        //            $scope.hide = true;
-        //            $scope.form = {};
-        //        });
-        //};
+        $scope.fetchAndAddTracks = function(artist, action){
+            apiService.getTracks(artist.id)
+                .success(function(data, status) {
+                    $scope.added = artist;
+                    console.log(data.playlist);
+
+                    if(action === 'add'){
+                        $scope.addTracks(data.playlist);
+                    } else {
+                        $scope.playMany(data.playlist);
+                    }
+
+                    $scope.$broadcast('flashNotification::message','Tracks added from:' + artist.last_name);
+                });
+        };
+
+        $scope.addNew = function(){
+
+            var artist = {
+                first_name: $scope.form.firstName,
+                middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
+                last_name: $scope.form.lastName
+            };
+
+            apiService.addNew(artist)
+                .success(function(data, status) {
+                    $scope.artists.push(data.artist);
+                    $scope.hide = true;
+                    $scope.form = {};
+                });
+        };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/artist/';
+        };
     });

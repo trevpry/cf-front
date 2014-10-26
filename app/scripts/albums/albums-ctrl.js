@@ -3,7 +3,7 @@
 angular.module('cfFront')
     .controller('albumsCtrl', function($scope, $http, $rootScope, apiService){
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/album/';
+        setRoot();
 
         apiService.getAll()
             .success(function(data, status) {
@@ -12,12 +12,13 @@ angular.module('cfFront')
         });
 
         $scope.fetchAndAddTracks = function(album, action){
+            setRoot();
             apiService.getTracks(album.id)
                 .success(function(data, status) {
                     if(action === 'add'){
-                        $scope.addTracks(data.data);
+                        $scope.addTracks(data.playlist);
                     } else {
-                        $scope.playMany(data.data);
+                        $scope.playMany(data.playlist);
                     }
 
                     $scope.$broadcast('flashNotification::message','Tracks added from:' + album.album_title);
@@ -25,7 +26,7 @@ angular.module('cfFront')
         };
 
         $scope.addNew = function(){
-
+            setRoot();
             var album = {
                 album_title: $scope.form.albumTitle
             };
@@ -36,5 +37,9 @@ angular.module('cfFront')
                     $scope.hide = true;
                     $scope.form = {};
                 });
+        };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/album/';
         };
     });

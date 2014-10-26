@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cfFront')
-    .controller('composersCtrl', function($scope, $http, $rootScope, apiService){
+    .controller('composersCtrl', function($scope, $http, apiService){
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/composer/';
+        setRoot();
 
         apiService.getAll()
             .success(function(data, status) {
@@ -12,15 +12,16 @@ angular.module('cfFront')
         });
 
         $scope.fetchAndAddTracks = function(composer, action){
+            setRoot();
             apiService.getTracks(composer.id)
                 .success(function(data, status) {
                     $scope.added = composer;
-                    console.log(data.data);
+                    console.log(data.playlist);
 
                     if(action === 'add'){
-                        $scope.addTracks(data.data);
+                        $scope.addTracks(data.playlist);
                     } else {
-                        $scope.playMany(data.data);
+                        $scope.playMany(data.playlist);
                     }
 
                     $scope.$broadcast('flashNotification::message','Tracks added from:' + composer.last_name);
@@ -28,11 +29,12 @@ angular.module('cfFront')
         };
 
         $scope.addNew = function(){
+            setRoot();
 
             var composer = {
-                first_name: $scope.form.firstName,
-                middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
-                last_name: $scope.form.lastName
+                composer_first_name: $scope.form.firstName,
+                composer_middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
+                composer_last_name: $scope.form.lastName
             };
 
             apiService.addNew(composer)
@@ -41,5 +43,9 @@ angular.module('cfFront')
                     $scope.hide = true;
                     $scope.form = {};
                 });
+        };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/composer/';
         };
     });

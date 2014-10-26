@@ -78,6 +78,19 @@ angular.module('cfFront').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'partials/artist/artist-index.html'
         })
 
+        .state('artist-index.add-artist-form', {
+            templateUrl: 'partials/artist/add-artist-form.html'
+        })
+
+        .state('artist-details', {
+            url: '/artist/{artistID}',
+            templateUrl: 'partials/artist/artist-detail.html'
+        })
+
+        .state('artist-details.edit-artist-form', {
+            templateUrl: 'partials/artist/edit-artist-form.html'
+        })
+
         .state('track-index', {
             url: '/tracks',
             templateUrl: 'partials/partial-track-index.html'
@@ -97,6 +110,6 @@ angular.module('cfFront').config(function($stateProvider, $urlRouterProvider) {
 angular.module('cfFront').run(function($rootScope, $httpBackend) {
 
     $rootScope.audio1 = "tracks/TR0000000005.mp3";
-
+    $rootScope.sitePath = "http://classicalforce.app:8000";
 
 });

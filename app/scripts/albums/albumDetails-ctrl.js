@@ -6,7 +6,7 @@ angular.module('cfFront')
         $scope.album = {};
         $scope.form = {};
         $scope.workversions = {};
-        apiService.root.rootPath = 'http://10.0.10.10/album/';
+        setRoot();
 
         $scope.works = {};
 
@@ -18,20 +18,20 @@ angular.module('cfFront')
                 works[$i]['workversion'] = [];
                 works[$i]['workversion'].push(workversions[$i]);
             }
-            console.log(works);
+
             return works;
         };
 
         apiService.getDetails($scope.id)
             .success(function(data, status) {
                 $scope.album = data.album;
-                console.log(data.album);
-                //$scope.workversions = data.workversions;
                 $scope.works = getWorks(data.album.workversions);
+                console.log($scope.works);
                 $scope.form.albumTitle = $scope.album.album_title;
             });
 
         $scope.edit = function(){
+            setRoot();
             var album = {
                 album_title: $scope.form.albumTitle
             };
@@ -43,11 +43,16 @@ angular.module('cfFront')
                 });
         };
 
-        $scope.delete = function(){
-            apiService.delete($scope.id)
+        $scope.destroy = function(){
+            setRoot();
+            apiService.destroy($scope.id)
                 .success(function(data, status) {
                     console.log('deleted');
                     $location.path("albums");
                 });
         };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/album/';
+        }
     });

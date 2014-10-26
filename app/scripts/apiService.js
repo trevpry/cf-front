@@ -43,7 +43,7 @@ angular.module('cfFront')
             });
         };
 
-        var deleteData = function(id) {
+        var destroy = function(id) {
             return $http({
                 method: 'DELETE',
                 url: root.rootPath + id
@@ -57,6 +57,6 @@ angular.module('cfFront')
             getTracks: function(id) { return getTracks(id); },
             addNew: function(data) { return addNew(data); },
             edit: function(id, data) { return edit(id, data); },
-            delete: function(id) { return deleteData(id); }
+            destroy: function(id) { return destroy(id); }
         };
     });

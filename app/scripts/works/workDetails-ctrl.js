@@ -6,15 +6,18 @@ angular.module('cfFront')
         $scope.id = $stateParams.workID;
         $scope.work = {};
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/work/';
+        $scope.workversions = {};
+        setRoot();
 
         apiService.getDetails($scope.id)
             .success(function(data, status) {
                 $scope.form.workTitle = data.work.work_title;
                 $scope.work = data.work;
+                $scope.workversions = data.work.workversions;
             });
 
         $scope.edit = function(){
+            setRoot();
             var work = {
                 work_title: $scope.form.workTitle
             };
@@ -24,13 +27,18 @@ angular.module('cfFront')
                     $scope.work = data.work;                    
                     $scope.hide = true;
                 });
-        }
+        };
 
-        $scope.delete = function(){
-            apiService.delete($scope.id)
+        $scope.destroy = function(){
+            setRoot();
+            apiService.destroy($scope.id)
                 .success(function(data, status) {
                     console.log('deleted');
                     $location.path("works");
                 });
+        };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/work/';
         };
     });

@@ -1,12 +1,13 @@
-<div>
+<div ng-controller="workDetailsCtrl">
+    <flash-notification></flash-notification>
 
-    <div class="col-md-6" ng-controller="workDetailsCtrl">
+    <div class="col-md-6">
         <flash-notification></flash-notification>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h2>{{ work.work_title }}
                     <a ui-sref=".edit-work-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Edit</a>
-                    <a class="btn btn-default btn-danger" role="button" ng-click="delete()">Delete</a>
+                    <a class="btn btn-default btn-danger" role="button" ng-click="destroy()">Delete</a>
                 </h2>
                 <h4 ng-repeat="composer in work.composers">by <a ui-sref="composer-details({ composerID: composer.id })">{{concatName(composer)}}</a></h4>
             </div>
@@ -16,6 +17,28 @@
                     <li ng-repeat="workversion in work.workversions">{{workversion.version_name}}</li>
                 </ul>
 
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6" ng-controller="albumsCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2> Albums </h2>
+            </div>
+            <div ng-repeat="workversion in work.workversions">
+                {{workversion.version_name}}
+                <div ng-repeat="album in workversion.albums">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(album, 'add')">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-default btn-lg add" track_id="{{ track.id }}" ng-click="fetchAndAddTracks(album, 'play')">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </button>
+
+                    <a ui-sref="album-details({albumID: album.id})">{{album.album_title}}</a>
+                </div>
             </div>
         </div>
     </div>

@@ -6,8 +6,8 @@ angular.module('cfFront')
         $scope.id = $stateParams.composerID;
         $scope.composer = {};
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/composer/';
         $scope.works = {};
+        setRoot();
 
         apiService.getDetails($scope.id)
             .success(function(data, status) {
@@ -20,6 +20,7 @@ angular.module('cfFront')
             });
 
         $scope.edit = function(){
+            setRoot();
             var composer = {
                 first_name: $scope.form.firstName,
                 middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
@@ -33,11 +34,16 @@ angular.module('cfFront')
                 });
         };
 
-        $scope.delete = function(){
-            apiService.delete($scope.id)
+        $scope.destroy = function(){
+            setRoot();
+            apiService.destroy($scope.id)
                 .success(function(data, status) {
                     console.log('deleted');
                     $location.path("composers");
                 });
+        };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/composer/';
         };
     });

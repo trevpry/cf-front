@@ -8,7 +8,7 @@ angular.module('cfFront')
         $scope.addTracks = playlistService.addTracks;
 
         $scope.play = function(track){
-            var path = 'http://10.0.10.10' + track.track_path;
+            var path = track.audiofiles[0].file_path;
 
             $scope.audioPlaylist = [];
             $scope.audio1.currentTrack = 0;
@@ -17,7 +17,7 @@ angular.module('cfFront')
             $scope.addTrack(track);
 
             $scope.nowPlaying = track;
-            console.log($scope.nowPlaying);
+            console.log(path);
         };
 
         $scope.playMany = function(tracks){

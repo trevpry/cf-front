@@ -6,7 +6,7 @@ angular.module('cfFront')
         $scope.id = $stateParams.artistID;
         $scope.artist = {};
         $scope.form = {};
-        apiService.root.rootPath = 'http://10.0.10.10/artist/';
+        setRoot();
         $scope.works = {};
 
         apiService.getDetails($scope.id)
@@ -14,14 +14,15 @@ angular.module('cfFront')
                 $scope.artist = data.artist;
                 console.log(data.artist);
                 $scope.form.firstName = $scope.artist.first_name;
-                $scope.form.middleName = $scope.artist.middle_name;
+                //$scope.form.middleName = $scope.artist.middle_name;
                 $scope.form.lastName = $scope.artist.last_name;
             });
 
         $scope.edit = function(){
+            setRoot();
             var artist = {
                 first_name: $scope.form.firstName,
-                middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
+                //middle_name: (($scope.form.middleName !== undefined) ? $scope.form.middleName : ''),
                 last_name: $scope.form.lastName
             };
 
@@ -32,11 +33,16 @@ angular.module('cfFront')
                 });
         };
 
-        $scope.delete = function(){
-            apiService.delete($scope.id)
+        $scope.destroy = function(){
+            setRoot();
+            apiService.destroy($scope.id)
                 .success(function(data, status) {
                     console.log('deleted');
-                    $location.path("artists");
+                    $location.path("artist");
                 });
         };
+
+        function setRoot(){
+            apiService.root.rootPath = $scope.sitePath + '/artist/';
+        }
     });

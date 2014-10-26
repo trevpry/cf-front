@@ -6,3 +6,5 @@ dist
 .sass-cache
 app/bower_components
 app/tracks
+.DS_Store
+app/.DS_Store

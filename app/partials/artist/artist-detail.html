@@ -1,0 +1,20 @@
+<div ng-controller="artistDetailsCtrl">
+    <flash-notification></flash-notification>
+
+    <div class="col-md-6">
+        <flash-notification></flash-notification>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>{{ concatName(artist) }}
+                    <a ui-sref=".edit-artist-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Edit</a>
+                    <a class="btn btn-default btn-danger" role="button" ng-click="destroy()">Delete</a>
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div ui-view ng-hide="hide"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cfFront')
-    .factory('playlistService', function(apiService) {
+    .factory('playlistService', function($rootScope, apiService) {
         var playlist = {
             nowPlaying : '',
             currentTrack: 0,
@@ -21,7 +21,7 @@ angular.module('cfFront')
 
                 this.audioPlaylist.push({
                     track: track,
-                    src: 'http://10.0.10.10' + track.track_path,
+                    src: track.audiofiles[0].file_path,
                     type: 'audio/mp3'
                 });
             },
