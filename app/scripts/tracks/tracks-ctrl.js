@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cfFront')
-    .controller('tracksCtrl', function($scope, $http, apiService, nameService){
+    .controller('tracksCtrl', function($scope, $http, apiService, nameService, playlistService){
         $scope.concatName = nameService.concatName;
         $scope.form = {};
         setRoot();
@@ -17,6 +17,14 @@ angular.module('cfFront')
                     $scope.tracks = data.tracks;
                     console.log("all tracks:" + data);
                 });
+        }
+
+        $scope.playAll = function(){
+           var randomTracks = $scope.tracks.sort(function(){
+               return 0.5 - Math.random();
+           });
+
+           $scope.playMany(randomTracks);
         };
 
 

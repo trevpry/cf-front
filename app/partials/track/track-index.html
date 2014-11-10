@@ -1,15 +1,22 @@
 <div class="jumbotron" ng-controller="tracksCtrl">
 
     <flash-notification></flash-notification>
-    <h2>All Tracks <a ui-sref=".add-track-form" class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a></h2>
+    <h2>All Tracks
+        <a ui-sref=".add-track-form"
+            class="btn btn-default btn-primary" role="button" ng-click="hide=false">Add New</a>
+        <button type="button" class="btn btn-default btn-md add" ng-click="playAll(tracks)">
+            <span class="glyphicon glyphicon-play"></span>
+        </button>
+    </h2>
+
     <div ui-view ng-hide="hide"></div>
 
     <div ng-repeat="track in tracks">
-        <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(track, 'add')">
+        <button type="button" class="btn btn-default btn-sm" ng-click="fetchAndAddTracks(track, 'add')">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
 
-        <button type="button" class="btn btn-default btn-lg add" ng-click="fetchAndAddTracks(track, 'play')">
+        <button type="button" class="btn btn-default btn-sm add" ng-click="fetchAndAddTracks(track, 'play')">
             <span class="glyphicon glyphicon-play"></span>
         </button>
 

@@ -1,9 +1,9 @@
 <div ng-repeat="composer in composers">
-    <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(composer, 'add')">
+    <button type="button" class="btn btn-default btn-sm" ng-click="fetchAndAddTracks(composer, 'add')">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
 
-    <button type="button" class="btn btn-default btn-lg add" track_id="{{ track.id }}" ng-click="fetchAndAddTracks(composer, 'play')">
+    <button type="button" class="btn btn-default btn-sm add" track_id="{{ track.id }}" ng-click="fetchAndAddTracks(composer, 'play')">
         <span class="glyphicon glyphicon-play"></span>
     </button>
 

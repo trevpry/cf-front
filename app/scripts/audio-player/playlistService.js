@@ -9,7 +9,7 @@ angular.module('cfFront')
                 if (track){
                     return track;
                 } else {
-                    return {track_title: 'Fidelio - Disc 2 Track 1', id: 'TR0000000005', track_path: 'https://s3.amazonaws.com/users_audio/Disc+2+-+Track++01.MP3'};
+                    return {cover_thumb: 'images/albums/th-AL0000000001.jpg', track_title: 'Fidelio - Disc 2 Track 1', id: 'TR0000000005', track_path: 'https://s3.amazonaws.com/users_audio/Disc+2+-+Track++01.MP3'};
                 }
             },
             audioPlaylist : [{

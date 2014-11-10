@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('cfFront')
-    .controller('playerCtrl', function ($scope, playlistService) {
-
+    .controller('playerCtrl', function ($scope, playlistService, nameService) {
+        $scope.concatName = nameService.concatName;
+        $scope.concatWork = nameService.concatWork;
         $scope.audioPlaylist = playlistService.audioPlaylist;
         $scope.addTrack = playlistService.addTrack;
         $scope.addTracks = playlistService.addTracks;
+        $scope.cover_thumb = 'images/albums/th-AL0000000001.jpg';
 
         $scope.play = function(track){
             console.log(track);
@@ -34,7 +36,12 @@ angular.module('cfFront')
         }, function() {
             if ($scope.audio1.currentTrack != 0) {
                 $scope.nowPlaying = ($scope.audioPlaylist[$scope.audio1.currentTrack - 1].track);
+                console.log("Now Playing:");
                 console.log($scope.nowPlaying);
+                $scope.cover_thumb = ($scope.nowPlaying.album_workversions.album.cover_thumb_path !== null)
+                    ? $scope.nowPlaying.album_workversions.album.cover_thumb_path
+                    : 'images/albums/th-AL0000000001.jpg';
+                //$scope.cover_thumb = 'images/albums/th-AL0000000001.jpg';
             }
         });
     });

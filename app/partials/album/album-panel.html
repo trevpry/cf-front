@@ -1,9 +1,9 @@
 <div ng-repeat="album in albums">
-    <button type="button" class="btn btn-default btn-lg" ng-click="fetchAndAddTracks(album, 'add')">
+    <button type="button" class="btn btn-default btn-sm" ng-click="fetchAndAddTracks(album, 'add')">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
 
-    <button type="button" class="btn btn-default btn-lg add" track_id="{{ track.id }}" ng-click="fetchAndAddTracks(album, 'play')">
+    <button type="button" class="btn btn-default btn-sm add" track_id="{{ track.id }}" ng-click="fetchAndAddTracks(album, 'play')">
         <span class="glyphicon glyphicon-play"></span>
     </button>
 

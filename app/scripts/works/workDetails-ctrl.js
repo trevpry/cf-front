@@ -3,6 +3,7 @@
 angular.module('cfFront')
     .controller('workDetailsCtrl', function($scope, $http, $stateParams, $location, nameService, apiService){
         $scope.concatName = nameService.concatName;
+        $scope.concatWork = nameService.concatWork;
         $scope.id = $stateParams.workID;
         $scope.work = {};
         $scope.form = {};

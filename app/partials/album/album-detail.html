@@ -13,7 +13,7 @@
                 <div ui-view ng-hide="hide"></div>
                 <div class="album-details">
                     <div class="cover-art">
-                        <img src="http://10.0.10.10/{{album.cover_thumb_path}}" class="img-responsive" alt="Album image" ng-show="album.cover_thumb_path !== null">
+                        <img src="{{album.cover_thumb_path}}" class="img-responsive" alt="Album image" ng-show="album.cover_thumb_path !== null">
                     </div>
 
                     <div class="details-right">

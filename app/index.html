@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+    <link rel="stylesheet" href="bower_components/jquery-easyui-bower/themes/metro-blue/datagrid.css">
+    <link rel="stylesheet" href="bower_components/jquery-easyui-bower/themes/metro-blue/linkbutton.css">
     <!-- build:css({.tmp,app}) styles/vendor.css -->
     <link rel="stylesheet" href="styles/vendor.css">
 
@@ -16,6 +18,7 @@
 
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+
     <!-- endbuild -->
 
     <!-- build:js scripts/modernizr.js -->
@@ -71,20 +74,24 @@
     </div>
 
     <div class='panel panel-default audio-player'>
+      <div class="album-thumb">
+        <a ui-sref="album-details({albumID: nowPlaying.album_workversions.album.id})">
+          <img src="{{ cover_thumb }}">
+        </a>
+      </div>
       <div class="player-control">
       <audio media-player="audio1" data-playlist="audioPlaylist">
-        <!--<source src="http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3" type="audio/mp3">-->
+        <!--<source src="http://ww  w.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3" type="audio/mp3">-->
           
       </audio>
         <button ng-click="audio1.playPause()" ng-show="!audio1.playing">Play</button>
         <button ng-click="audio1.playPause()" ng-show="audio1.playing">Pause</button>
+        <button ng-click="audio1.prev()">Previous</button>
         <button ng-click="audio1.next()">Next</button>
         <div class="btn btn-noclick">
-          <span>currentTrack: <span class="badge">{{ audio1.currentTrack }}</span></span>
+          <span>Current Track: <span class="badge">{{ audio1.currentTrack }}</span></span>
         </div>
-        <div class="btn btn-noclick">
-          <span><i class="fa fa-clock-o"></i>: <span class="badge ng-binding">{{ audio1.formatTime }}</span></span>
-        </div>
+
         <div class="progress" ng-click="audio1.seek(audio1.duration * seekPercentage($event))">
           <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" ng-style="{ width: audio1.currentTime*100/audio1.duration + '%' }"></div>
           <div class="time" ng-show="audio1.formatTime">
@@ -96,10 +103,27 @@
 
       <div class="track-details panel panel-default">
         <div class="panel-body">
-          <ul>
-            <li class="details-label">Track Number: {{ audio1.currentTrack }}</li>
-            <li class="details-label">Track Title: {{ nowPlaying.track_title }}</li>
-          </ul>
+          <div class="track-details-left">
+            <ul>
+              <li class="details-label">Track: {{ nowPlaying.track_number_on_disc }}
+                Disc: {{ nowPlaying.disc_number }}</li>
+              <li class="details-label">{{ nowPlaying.track_title }}</li>
+            </ul>
+          </div>
+          <div class="track-details-right">
+            <ul>
+              <li class="details-label">
+                <a ui-sref="composer-details({composerID: nowPlaying.album_workversions.workversion.work.composers[0].id})">
+                  {{ concatName(nowPlaying.album_workversions.workversion.work.composers[0]) }}
+                </a>
+              </li>
+              <li class="details-label">
+                <a ui-sref="work-details({workID: nowPlaying.album_workversions.workversion.work.id})">
+                {{ concatWork(nowPlaying.album_workversions.workversion.work) }}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -135,6 +159,7 @@
     <!-- endbuild -->
 
     <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="bower_components/jquery-easyui-bower/extensions/jquery-easyui-datagridview/datagrid-groupview.js"></script>
     <script src="scripts/cfFront.js"></script>
     <script src="scripts/flashNotification.js"></script>
     <script src="scripts/main/main-ctrl.js"></script>
@@ -156,6 +181,7 @@
     <script src="scripts/albums/albumDetails-ctrl.js"></script>
     <script src="scripts/tracks/trackDetails-ctrl.js"></script>
     <script src="scripts/albums/album-tracksAccordion.js"></script>
+    <script src="scripts/tempTracks.js"></script>
 
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->

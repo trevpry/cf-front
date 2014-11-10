@@ -111,7 +111,7 @@ angular.module('cfFront').config(function($stateProvider, $urlRouterProvider) {
 
         .state('temp-track-index', {
             url: '/temp-tracks',
-            templateUrl: 'partials/partial-home.html'
+            templateUrl: 'partials/temp-tracks/temp-tracks.html'
         })
 
 
@@ -124,5 +124,6 @@ angular.module('cfFront').run(function($rootScope, $httpBackend) {
 
     $rootScope.audio1 = "tracks/TR0000000005.mp3";
     $rootScope.sitePath = "http://classicalforce.app:8000";
+    $rootScope.cover_thumb = 'images/albums/th-AL0000000001.jpg';
 
 });
