@@ -19,26 +19,30 @@ angular.module('cfFront')
                 url: 'http://classicalforce.app:8000/get_temp_track',
                 method: 'get',
                 //multiSort: 'true',
-                onLoadSuccess:function(){
-                    var numRows = $(this).datagrid('getRows').length;
-                    var data = $(this).datagrid('getData');
-
-                },
+                //onLoadSuccess:function(){
+                //    alert('success');
+                //    var numRows = $(this).datagrid('getRows').length;
+                //    var data = $(this).datagrid('getData');
+                //    compile($('.easy-ui-datagrid .datagrid-group')[0])(scope);
+                //    scope.$apply();
+                //
+                //
+                //},
                 saveUrl: 'save_user.php',
                 //updateUrl: 'http://10.0.10.10/temp_track_update',
                 destroyUrl: 'destroy_user.php',
                 columns:[[
                     {field:'check',checkbox:"true"},
-                    {field:'md5_hash',title:'Cover Art',
+                    {field:'id',title:'Track ID',width:50,hidden:"true"},
+                    {field:'album_art_path',title:'Cover Art',
                         formatter: function(value,row,index){
-                            if (value != null){
-                                return '<img src = /img/temp_albums/th-' + value + ".jpg><\/img>";
-                            } else {
-                                return value;
-                            }
+                        //    if (value != null){
+                                //return '<img src="' + value +'">';
+                        //    } else {
+                        //        return value;
+                        //    }
                         }
                     },
-                    {field:'id',title:'Track ID',width:50,hidden:true},
                     {field:'track_title',title:'Track Title',editor:'text',sortable:"true"},
                     {field:'album_title',title:'Album Title',editor:'text',sortable:"true"},
                     {field:'work_title',title:'Work Title',editor:'text',sortable:"true"},
@@ -65,23 +69,45 @@ angular.module('cfFront')
 
                 },
                 onLoadSuccess: function(data){
+                    var merges = [];
+
                     //$('.datagrid-group-title').attr('ng-click', 'click()');
-                    //    compile($('.datagrid-group-title'))(scope);
+                    $('.datagrid-group-title').bind('click', function(){
+                        alert($(this).text());
+                    });
+                    //scope.$apply();
+                    console.log($('.datagrid-group-title'));
+                    //console.log(data);
+                    //compile($('.easy-ui-datagrid .datagrid-group')[0])(scope);
+
+
+
+                    //for (var i=0; i<merges.length; i++){
+                    //    iElement.datagrid('mergeCells',{
+                    //        index: merges[i].index,
+                    //        field: 'album_art_path',
+                    //        rowspan: merges[i].rowspan
+                    //    });
+                    //}
 
                 }
 
             });
 
-
+            iElement.children().bind('mouseenter', function(){
+                iElement.children().css('background-color', 'pink');
+                scope.$apply();
+            });
 
             //scope.$digest();
-            //console.log(iElement.find('#saveAll').text());
+            //console.log($('.datagrid-group-title'));
 
         }
 
         return {
             replace: true,
             transclude: false,
+            scope: {clickCallback: "&"},
             compile: function (element, attrs) {
 
                 return link;
@@ -99,12 +125,15 @@ angular.module('cfFront')
                     //$('.datagrid-group-title').replaceWith($('.datagrid-group-title'));
                     //$('.datagrid-group-title').attr('ng-click', 'click()');
                     //$compile($('.datagrid-group-title'))($scope);
-                    $('.datagrid-group-title').attr('ng-click', 'click()');
-                    $compile($('.datagrid-view .datagrid-group')[0][0][0][1])($scope);
+                    //$('.datagrid-group-title').attr('ng-click', 'click()');
+                    //$compile($('.datagrid-view .datagrid-group')[0])($scope);
+                    alert('change');
+                    $scope.$apply();
                 };
 
                 $(document).on('click', '.datagrid-group-title', function(){
                     alert('test clicked');
+                    $scope.$apply();
                 });
 
                 $timeout(function(){
@@ -117,9 +146,14 @@ angular.module('cfFront')
                     //$scope.$apply();
                 },3000);
 
-                var click = function(){
+                $scope.click = function(){
                   alert('clicked');
                 };
+
+                $element.click(function(){
+                    $scope.clickCallback();
+                    $scope.$apply();
+                })
             }
         };
     });
