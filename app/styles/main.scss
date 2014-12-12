@@ -4,10 +4,11 @@ $progress_bar_width: 300px;
 
 body {
   padding-top: 70px;
+  //margin-bottom: 80px;
 }
 
 .container {
-  margin-bottom: 60px;
+  margin-bottom: 80px;
 }
 
 .browsehappy {
@@ -30,6 +31,7 @@ body {
 }
 
 div.audio-player {
+
   position: fixed;
   bottom: 0;
   padding-bottom: 15px;

@@ -19,7 +19,7 @@ gulp.task('test', function() {
     'test/unit/**/*.js'
   ]);
 
-  return gulp.src(testFiles)
+  return gulp.src(testFiles) //testFiles
     .pipe($.karma({
       configFile: 'test/karma.conf.js',
       action: 'run'

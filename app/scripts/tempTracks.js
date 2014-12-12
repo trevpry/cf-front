@@ -1,13 +1,9 @@
 angular.module('cfFront')
-    .directive('tempTracks', function(){
+    .directive('tempTracks', function(mergesService){
         function link(scope, iElement, attrs, compile){
+            var merges;
+            var mergeFields = ['work_title', 'album_art_path'];
 
-
-            //iElement.('datagrid-group-title').on('click', function(){
-            //   alert('clicked');
-            //});
-
-            //alert('test');
             iElement.datagrid({
                 title: 'Edit Tracks',
                 toolbar: '#toolbar',
@@ -15,19 +11,9 @@ angular.module('cfFront')
                 singleSelect: false,
                 checkOnSelect: false,
                 autoRowHeight: true,
-                fitColumns: true,
+                //fitColumns: true,
                 url: 'http://classicalforce.app:8000/get_temp_track',
                 method: 'get',
-                //multiSort: 'true',
-                //onLoadSuccess:function(){
-                //    alert('success');
-                //    var numRows = $(this).datagrid('getRows').length;
-                //    var data = $(this).datagrid('getData');
-                //    compile($('.easy-ui-datagrid .datagrid-group')[0])(scope);
-                //    scope.$apply();
-                //
-                //
-                //},
                 saveUrl: 'save_user.php',
                 //updateUrl: 'http://10.0.10.10/temp_track_update',
                 destroyUrl: 'destroy_user.php',
@@ -36,16 +22,17 @@ angular.module('cfFront')
                     {field:'id',title:'Track ID',width:50,hidden:"true"},
                     {field:'album_art_path',title:'Cover Art',
                         formatter: function(value,row,index){
-                        //    if (value != null){
-                                //return '<img src="' + value +'">';
-                        //    } else {
-                        //        return value;
-                        //    }
+                            if (value != undefined && value != null){
+                                return '<img src="' + value +'">';
+                            } else {
+                                return '';
+                            }
                         }
                     },
-                    {field:'track_title',title:'Track Title',editor:'text',sortable:"true"},
-                    {field:'album_title',title:'Album Title',editor:'text',sortable:"true"},
                     {field:'work_title',title:'Work Title',editor:'text',sortable:"true"},
+                    {field:'track_title',title:'Track Title',editor:'text',sortable:"true"},
+                    {field:'album_title',title:'Album Title',editor:'text',sortable:"true",hidden:"true"},
+
                     {field:'work_number',title:'Work Number',editor:'text'},
                     {field:'key',title:'Key',editor:'text'},
                     {field:'opus_number',title:'Opus Number',editor:'text'},
@@ -65,95 +52,93 @@ angular.module('cfFront')
                 onHeaderContextMenu: function(e, field){
                   alert('menu');
                 },
-                onRowContextMenu: function(e, index, row){
+                onClickCell: function(index, field, value){
+                    if (mergeFields.indexOf(field) >= 0){
+                        var isSelected = $('tr[datagrid-row-index="' + index + '"]').first().hasClass('datagrid-row-selected');
 
+                        if (!isSelected){
+                            selectMerges(merges, index, field, iElement);
+                        } else {
+                            unselectMerges(merges, index, field, iElement);
+                        }
+                    }
                 },
                 onLoadSuccess: function(data){
-                    var merges = [];
+                    //iElement.datagrid('collapseGroup', 0);
+                    merges = mergesService.getMerges(data, mergeFields);
 
-                    //$('.datagrid-group-title').attr('ng-click', 'click()');
                     $('.datagrid-group-title').bind('click', function(){
                         alert($(this).text());
                     });
-                    //scope.$apply();
-                    console.log($('.datagrid-group-title'));
-                    //console.log(data);
-                    //compile($('.easy-ui-datagrid .datagrid-group')[0])(scope);
 
+                    applyMerges(merges, iElement);
 
-
-                    //for (var i=0; i<merges.length; i++){
-                    //    iElement.datagrid('mergeCells',{
-                    //        index: merges[i].index,
-                    //        field: 'album_art_path',
-                    //        rowspan: merges[i].rowspan
-                    //    });
-                    //}
-
+                    iElement.datagrid('expandGroup', 1);
+                    //scope.$digest();
                 }
-
             });
-
-            iElement.children().bind('mouseenter', function(){
-                iElement.children().css('background-color', 'pink');
-                scope.$apply();
-            });
-
-            //scope.$digest();
-            //console.log($('.datagrid-group-title'));
-
         }
 
         return {
             replace: true,
             transclude: false,
-            scope: {clickCallback: "&"},
             compile: function (element, attrs) {
 
                 return link;
             },
-            controller: function($scope, $element, $compile, $timeout){
-               //console.log($element.parent().find('.datagrid-group-title').text());
-               ////alert($(document).find('.datagrid-group-title').text());
-               // $('.datagrid-group-title').on('click', function(){
-               //    alert('composer');
-               // });
+            controller: function($scope, $element){
+               $('.modal').hide();
 
-                $('.modal').hide();
-
-                $scope.change = function(){
-                    //$('.datagrid-group-title').replaceWith($('.datagrid-group-title'));
-                    //$('.datagrid-group-title').attr('ng-click', 'click()');
-                    //$compile($('.datagrid-group-title'))($scope);
-                    //$('.datagrid-group-title').attr('ng-click', 'click()');
-                    //$compile($('.datagrid-view .datagrid-group')[0])($scope);
-                    alert('change');
-                    $scope.$apply();
-                };
-
-                $(document).on('click', '.datagrid-group-title', function(){
-                    alert('test clicked');
-                    $scope.$apply();
-                });
-
-                $timeout(function(){
-                    //alert('timeout');
-
-                    //$('.datagrid-group-title').attr('ng-click', 'click()');
-                    ////$('.datagrid-group-title').attr('data-toggle', 'modal');
-                    ////$('.datagrid-group-title').attr('data-target', '#basicModal');
-                    //$compile($('.easy-ui-datagrid .datagrid-group')[0])($scope);
-                    //$scope.$apply();
-                },3000);
-
-                $scope.click = function(){
-                  alert('clicked');
-                };
-
-                $element.click(function(){
-                    $scope.clickCallback();
-                    $scope.$apply();
-                })
             }
         };
     });
+
+var applyMerges = function(merges, element){
+    if (merges !== undefined) {
+
+        //loops through each set of merges for each field to be merged
+        for (var j=0; j<merges.length; j++){
+
+            for (var i=0; i<merges[j].merges.length; i++){
+                element.datagrid('mergeCells',{
+                    index: merges[j].merges[i].index,
+                    field: merges[j].field,
+                    rowspan: merges[j].merges[i].rowspan
+                });
+            }
+        }
+    }
+};
+
+var getFieldMergeSpan = function(merges, index, field){
+    //selects the merges for the passed in field
+    var fieldMerges = merges.filter(function(element){
+        return element.field == field;
+    });
+
+    //selects the merge with passed in index
+    var fieldMergeSpan = fieldMerges[0].merges.filter(function(element){
+        return element.index == index;
+    });
+
+    return (fieldMergeSpan[0] !== undefined) ? fieldMergeSpan[0].rowspan : 0
+};
+
+var selectMerges = function(merges, index, field, iElement){
+    var mergeSpan = getFieldMergeSpan(merges, index, field);
+    console.log(mergeSpan);
+
+    //selects all rows within the merge
+    for (var i = 1; i<mergeSpan; i++){
+        iElement.datagrid('selectRow', i+index);
+    }
+};
+
+var unselectMerges = function(merges, index, field, iElement){
+    var mergeSpan = getFieldMergeSpan(merges, index, field);
+
+    //unselects all rows within the merge
+    for (var i = 1; i<mergeSpan; i++){
+        iElement.datagrid('unselectRow', i+index);
+    }
+};

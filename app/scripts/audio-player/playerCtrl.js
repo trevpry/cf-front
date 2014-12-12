@@ -38,7 +38,9 @@ angular.module('cfFront')
                 $scope.nowPlaying = ($scope.audioPlaylist[$scope.audio1.currentTrack - 1].track);
                 console.log("Now Playing:");
                 console.log($scope.nowPlaying);
-                $scope.cover_thumb = ($scope.nowPlaying.album_workversions.album.cover_thumb_path !== null)
+
+                $scope.cover_thumb = ($scope.nowPlaying !== undefined
+                    && $scope.nowPlaying.album_workversions.album.cover_thumb_path !== null)
                     ? $scope.nowPlaying.album_workversions.album.cover_thumb_path
                     : 'images/albums/th-AL0000000001.jpg';
                 //$scope.cover_thumb = 'images/albums/th-AL0000000001.jpg';
